@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="title">Default title</ui:insert></title>
+</h:head>
+<h:form>
+	<p:menubar>
+		<p:menuitem value="Home" url="/index.xhtml" icon="ui-icon-home"></p:menuitem>
+		<p:submenu label="Cadastro">
+			<p:menuitem value="Cadastro de Aulas"
+				url="/templates/cadastroAula.xhtml" />
+			<p:menuitem value="Cadastro de Matérias"
+				url="/templates/cadastroMateria.xhtml" />
+			<p:menuitem value="Cadastro de Professores"
+				url="/templates/cadastroProfessor.xhtml" />
+
+		</p:submenu>
+		<p:submenu label="Consultar">
+			<p:menuitem value="Visualizar Aulas" url="" />
+			<p:menuitem value="Visualizar Matérias"
+				url="/templates/exibirMateria.xhtml" />
+			<p:menuitem value="Visualizar Professores"
+				url="/templates/exibirProfessor.xhtml" />
+		</p:submenu>
+	</p:menubar>
+</h:form>
+<div class="flex-container" style="text-align: left;">
+	<h:form id="form" style="width:100%">
+		<p:panel id="panel" header="Form">
+			<p:messages id="msgs" />
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:outputLabel id="sala" value="Sala em que a aula será dada:" />
+				<p:inputText value="#{aulaController.sala}" id="salaValidacao"
+					required="true" />
+				<p:outputLabel id="dia" value="Dia em que a aula será dada:" />
+				<p:selectOneMenu value="#{aulaController.dia}">
+					<f:selectItems value="#{data.diaSemanas}"/>
+				</p:selectOneMenu>
+					
+				<p:outputLabel id="horarioInicio" value="Horário de Início da Aula:" />
+				<p:calendar id="horarioInicioCalendar"
+					value="#{aulaController.horarioInicio}" pattern="HH:mm"
+					timeOnly="true" required="true" />
+				<p:outputLabel id="horarioTermino"
+					value="Horário de Término da Aula:" />
+				<p:calendar id="horarioTerminoCalendar"
+					value="#{aulaController.horarioTermino}" pattern="HH:mm"
+					timeOnly="true" required="true"/>
+				<p:outputLabel id="materia" value="Matéria:" />
+				<p:selectOneMenu id="materiaSelect"
+					value="#{materiaController.materia}" converter="materiaConverter"
+					panelStyle="width:180px" effect="fade" var="m" style="width:160px"
+					filter="true" filterMatchMode="startsWith">
+					<f:selectItems value="#{materiaController.materias}" var="materia"
+						itemLabel="#{materia.nome}" itemValue="#{materia}" />
+					<p:column>
+						<h:outputText value="#{m.nome}" />
+					</p:column>
+				</p:selectOneMenu>
+				<p:outputLabel id="professor" value="Professor que administrará as aulas:"/>
+				<p:selectOneMenu id = "professorSelect" value="#{professorController.professor}" converter="professorConverter"
+				panelStyle="width:180px" effect="fade" var="p" style="width:160px" filter="true" filterMatchMode="startsWith">
+				<f:selectItems value="#{professorController.professores}" var="professor" 
+				itemLabel="#{professor.nome}" itemValue="#{professor}" />
+				<p:column>
+					<h:outputText value="#{p.nome}"/>
+				</p:column>
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<h:commandButton value="Enviar" update="form"
+				actionListener="#{aulaController.addAula}" icon="ui-icon-check" />
+		</p:panel>
+
+	</h:form>
+</div>
+</html>

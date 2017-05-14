@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title><ui:insert name="title">Default title</ui:insert></title>
+</h:head>
+<h:form>
+	<p:menubar>
+		<p:menuitem value="Home" url="/index.xhtml" icon="ui-icon-home"></p:menuitem>
+		<p:submenu label="Cadastro">
+			<p:menuitem value="Cadastro de Aulas"
+				url="/templates/cadastroAula.xhtml" />
+			<p:menuitem value="Cadastro de Matérias"
+				url="/templates/cadastroMateria.xhtml" />
+			<p:menuitem value="Cadastro de Professores"
+				url="/templates/cadastroProfessor.xhtml" />
+
+		</p:submenu>
+		<p:submenu label="Consultar">
+			<p:menuitem value="Visualizar Aulas" url="" />
+			<p:menuitem value="Visualizar Matérias" url="/templates/exibirMateria.xhtml" />
+			<p:menuitem value="Visualizar Professores" url="/templates/exibirProfessor.xhtml" />
+		</p:submenu>
+	</p:menubar>
+</h:form>
+<h:form id="form">
+	<p:panel id="panel" header="Form">
+		<p:messages id="msgs" />
+		<p:outputLabel id="nome" value="Nome da Matéria:" />
+		<p:inputText value="#{materiaController.nome}" id="nomeValidacao" required="true">
+			<f:validator
+				validatorId="br.com.redefatec.validator.MateriaValidator"></f:validator>
+		</p:inputText>
+		
+		<h:commandButton value="Enviar" update="form"
+			actionListener="#{materiaController.addMateria}" icon="ui-icon-check" />
+	</p:panel>
+</h:form>
+
+</html>
